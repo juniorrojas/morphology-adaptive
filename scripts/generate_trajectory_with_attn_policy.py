@@ -42,7 +42,7 @@ if __name__ == "__main__":
     with open(mesh_filename) as f:
         mesh_data = json.load(f)
 
-    vertex_k, muscle_k = attn.make_muscle_and_vertex_keys(mesh_data, policy_data)
+    vertex_k, muscle_k = attn.make_vertex_and_muscle_keys(mesh_data, policy_data)
 
     native_instance = algovivo.NativeInstance.load(
         str(this_dirpath.parent.joinpath("build", "algovivo.so"))
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     shutil.rmtree(traj_output_dirpath, ignore_errors=True)
     os.makedirs(traj_output_dirpath, exist_ok=True)
     os.makedirs(steps_dirpath, exist_ok=True)
-    
+
     with open(traj_output_dirpath.joinpath("mesh.json"), "w") as f:
         json.dump(mesh_data, f)
 
