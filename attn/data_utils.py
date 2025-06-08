@@ -2,7 +2,7 @@ import json
 import torch
 from .frame_projection import project_pos_vel
 
-def make_muscle_and_vertex_keys(mesh_data, policy_data):
+def make_vertex_and_muscle_keys(mesh_data, policy_data):
     muscles_pos = []
     vertex_keys = []
 

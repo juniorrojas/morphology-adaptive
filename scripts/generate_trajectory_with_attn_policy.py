@@ -42,15 +42,13 @@ if __name__ == "__main__":
     with open(mesh_filename) as f:
         mesh_data = json.load(f)
 
-    vertex_keys, muscles_pos = attn.make_muscle_and_vertex_keys(mesh_data, policy_data)
+    vertex_k, muscle_k = attn.make_muscle_and_vertex_keys(mesh_data, policy_data)
 
     native_instance = algovivo.NativeInstance.load(
         str(this_dirpath.parent.joinpath("build", "algovivo.so"))
     )
 
     num_vertices = len(mesh_data["pos"])
-    projected_pos = torch.empty(num_vertices, 2, dtype=torch.float32)
-    projected_vel = torch.empty(num_vertices, 2, dtype=torch.float32)
 
     model = attn.Model.load(args.policy)
 
@@ -63,16 +61,16 @@ if __name__ == "__main__":
         muscles_l0=mesh_data.get("l0"),
     )
 
-    vertex_keys = torch.tensor(vertex_keys, dtype=torch.float32).unsqueeze(0)
-    muscle_k = torch.tensor(muscles_pos, dtype=torch.float32).unsqueeze(0)
+    vertex_k = torch.tensor(vertex_k, dtype=torch.float32).unsqueeze(0)
+    muscle_k = torch.tensor(muscle_k, dtype=torch.float32).unsqueeze(0)
 
     traj_output_dirpath = Path(args.output)
     steps_dirpath = traj_output_dirpath.joinpath("steps")
 
     shutil.rmtree(traj_output_dirpath, ignore_errors=True)
     os.makedirs(traj_output_dirpath, exist_ok=True)
-
     os.makedirs(steps_dirpath, exist_ok=True)
+    
     with open(traj_output_dirpath.joinpath("mesh.json"), "w") as f:
         json.dump(mesh_data, f)
 
@@ -90,10 +88,10 @@ if __name__ == "__main__":
             center_vertex_id, forward_vertex_id
         )
         batch_size = 1
-        assert vertex_keys.shape == (batch_size, num_vertices, 2)
-        vertex_values = torch.cat([projected_pos, projected_vel], dim=1).unsqueeze(0)
-        assert vertex_values.shape == (batch_size, num_vertices, 4)
-        da = model(vertex_keys, muscle_k, vertex_values)
+        assert vertex_k.shape == (batch_size, num_vertices, 2)
+        vertex_v = torch.cat([projected_pos, projected_vel], dim=1).unsqueeze(0)
+        assert vertex_v.shape == (batch_size, num_vertices, 4)
+        da = model(vertex_k, muscle_k, vertex_v)
         da = da.clamp(min=-max_abs_da, max=max_abs_da)[0]
 
         # update a with da
