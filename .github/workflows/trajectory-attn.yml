@@ -79,7 +79,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install ffmpeg
 
-      - run: |
+      - name: Render trajectory frames
+        run: |
           cd algovivo.repo
           npm ci
           cd ..
@@ -100,7 +101,13 @@ jobs:
             -pix_fmt yuv420p \
             video_${{ matrix.agent }}.mp4
 
-      - name: Upload frames
+      - name: Upload trajectory data
+        uses: actions/upload-artifact@v4
+        with:
+          path: trajectory_attn.out
+          name: trajectory-${{ matrix.agent }}
+
+      - name: Upload trajectory frames
         uses: actions/upload-artifact@v4
         with:
           path: frames.out
