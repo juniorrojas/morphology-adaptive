@@ -6,6 +6,7 @@ this_filepath = Path(os.path.realpath(__file__))
 this_dirpath = this_filepath.parent
 import json
 import argparse
+import time
 import attn
 import algovivo
 
@@ -64,17 +65,21 @@ if __name__ == "__main__":
     vertex_k = torch.tensor(vertex_k, dtype=torch.float32).unsqueeze(0)
     muscle_k = torch.tensor(muscle_k, dtype=torch.float32).unsqueeze(0)
 
-    traj_output_dirpath = Path(args.output)
-    steps_dirpath = traj_output_dirpath.joinpath("steps")
+    trajectory_output_dirpath = Path(args.output)
+    steps_dirpath = trajectory_output_dirpath.joinpath("steps")
 
-    shutil.rmtree(traj_output_dirpath, ignore_errors=True)
-    os.makedirs(traj_output_dirpath, exist_ok=True)
+    shutil.rmtree(trajectory_output_dirpath, ignore_errors=True)
+    os.makedirs(trajectory_output_dirpath, exist_ok=True)
     os.makedirs(steps_dirpath, exist_ok=True)
 
-    with open(traj_output_dirpath.joinpath("mesh.json"), "w") as f:
+    with open(trajectory_output_dirpath.joinpath("mesh.json"), "w") as f:
         json.dump(mesh_data, f)
 
-    for i in range(args.steps):
+    sim_step_time = 0.0 # time spent on simulation steps only
+
+    num_steps = args.steps
+
+    for i in range(num_steps):
         print(i)
 
         # state before policy and simulation step
@@ -98,10 +103,17 @@ if __name__ == "__main__":
         system.muscles.a += da
         system.muscles.a.clamp_(min=min_a, max=1)
 
+        # start timing simulation step
+        sim_step_start_time = time.time()
+
         # update simulation
         system.step()
 
-        # state after policy and system step
+        # end timing simulation step
+        sim_step_end_time = time.time()
+        sim_step_time += sim_step_end_time - sim_step_start_time
+
+        # state after policy and simulation step
         pos1 = system.vertices.pos.detach().tolist()
         vel1 = system.vertices.vel.detach().tolist()
         a1 = system.muscles.a.detach().tolist()
@@ -117,4 +129,7 @@ if __name__ == "__main__":
                 "a1": a1
             }, f)
 
-    print(f"trajectory saved to {traj_output_dirpath}")
+    print(f"trajectory saved to {trajectory_output_dirpath}")
+
+    print(f"simulation step time: {sim_step_time:.3f} seconds")
+    print(f"simulation steps per second: {num_steps / sim_step_time:.1f}")
