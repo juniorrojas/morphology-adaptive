@@ -1,5 +1,7 @@
 # morphology-adaptive muscle-driven locomotion via attention mechanisms
 
+[![test](https://github.com/juniorrojas/morphology-adaptive/actions/workflows/test.yml/badge.svg)](https://github.com/juniorrojas/morphology-adaptive/actions/workflows/test.yml)
+
 This repository demonstrates how a single locomotion controller can work with different shapes (biped and quadruped). It uses an attention mechanism to handle an arbitrary number of inputs, and the same module is shared across all muscles to support an arbitrary number of outputs.
 
 More details in [this paper](https://dl.acm.org/doi/10.1145/3712255.3734277).
