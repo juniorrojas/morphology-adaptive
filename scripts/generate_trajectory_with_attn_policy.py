@@ -139,7 +139,7 @@ if __name__ == "__main__":
 
     print(f"trajectory saved to {trajectory_output_dirpath}")
 
-    print(f"simulation step time: {sim_step_time:.3f} seconds")
+    print(f"total simulation step time: {sim_step_time:.3f} seconds")
     print(f"simulation steps per second: {num_steps / sim_step_time:.1f}")
-    print(f"policy step time: {policy_step_time:.3f} seconds")
+    print(f"total policy step time: {policy_step_time:.3f} seconds")
     print(f"policy steps per second: {num_steps / policy_step_time:.1f}")
