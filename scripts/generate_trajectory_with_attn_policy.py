@@ -76,6 +76,7 @@ if __name__ == "__main__":
         json.dump(mesh_data, f)
 
     sim_step_time = 0.0 # time spent on simulation steps only
+    policy_step_time = 0.0 # time spent on policy steps only
 
     num_steps = args.steps
 
@@ -86,8 +87,11 @@ if __name__ == "__main__":
         pos0 = system.vertices.pos.detach().tolist()
         vel0 = system.vertices.vel.detach().tolist()
         a0 = system.muscles.a.detach().tolist()
-        
-        # run policy (pos, vel) -> da
+
+        # start timing policy step
+        policy_step_start_time = time.time()
+
+        # run policy (pos, vel) -> da -> a
         _, projected_pos, projected_vel = attn.project_pos_vel(
             system.vertices.pos, system.vertices.vel,
             center_vertex_id, forward_vertex_id
@@ -102,6 +106,10 @@ if __name__ == "__main__":
         # update a with da
         system.muscles.a += da
         system.muscles.a.clamp_(min=min_a, max=1)
+
+        # end timing policy step
+        policy_step_end_time = time.time()
+        policy_step_time += policy_step_end_time - policy_step_start_time
 
         # start timing simulation step
         sim_step_start_time = time.time()
@@ -131,5 +139,7 @@ if __name__ == "__main__":
 
     print(f"trajectory saved to {trajectory_output_dirpath}")
 
-    print(f"simulation step time: {sim_step_time:.3f} seconds")
+    print(f"total simulation step time: {sim_step_time:.3f} seconds")
     print(f"simulation steps per second: {num_steps / sim_step_time:.1f}")
+    print(f"total policy step time: {policy_step_time:.3f} seconds")
+    print(f"policy steps per second: {num_steps / policy_step_time:.1f}")
