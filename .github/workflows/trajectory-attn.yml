@@ -20,7 +20,7 @@ on:
         default: 300
 
 env:
-  ALGOVIVO_REF: '4d3abd72c43d9d680d1514d9b24b042ef9e46a8f'
+  ALGOVIVO_REF: 'c84f407d14a7a57cd0cb37514fdab0b5f15983db'
   ALGOVIVO_BUILD_REF: '02041c91eb67142fe1a08e10944e214a872d44db'
 
 jobs:
