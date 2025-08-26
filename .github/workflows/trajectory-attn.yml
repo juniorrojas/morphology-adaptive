@@ -21,7 +21,7 @@ on:
 
 env:
   ALGOVIVO_REF: 'c84f407d14a7a57cd0cb37514fdab0b5f15983db'
-  ALGOVIVO_BUILD_REF: '02041c91eb67142fe1a08e10944e214a872d44db'
+  ALGOVIVO_BUILD_REF: '1f827a26cd64ea58b96719c84f0192d7ef1e36b2'
 
 jobs:
   generate-trajectory:
@@ -64,7 +64,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - run: pip install -r requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Generate trajectory
         run: |
