@@ -15,3 +15,24 @@ View animation in higher quality [here](https://www.youtube.com/watch?v=gmgyFIJz
 For simulation, this repository uses [Algovivo](https://github.com/juniorrojas/algovivo), originally built for the browser using WebAssembly, but here a native build is used to enable PyTorch integration.
 
 The workflow [`trajectory-attn.yml`](.github/workflows/trajectory-attn.yml) runs the controller on both morphologies and generates a video. If you have your own copy or fork of this repository, you can [run the workflow from the GitHub Actions UI](https://docs.github.com/en/actions/how-tos/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow#running-a-workflow), no local installation needed. Once it completes, the video will be saved as a workflow artifact and can be downloaded from the workflow run page.
+
+## citation
+
+```
+@inproceedings{10.1145/3712255.3734277,
+author = {Rojas, Junior},
+title = {Morphology-Adaptive Muscle-Driven Locomotion via Attention Mechanisms},
+year = {2025},
+isbn = {9798400714641},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3712255.3734277},
+doi = {10.1145/3712255.3734277},
+booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference Companion},
+pages = {2138–2142},
+numpages = {5},
+keywords = {neural networks, attention mechanisms, virtual creatures},
+location = {NH Malaga Hotel, Malaga, Spain},
+series = {GECCO '25 Companion}
+}
+```
