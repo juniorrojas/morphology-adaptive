@@ -18,7 +18,7 @@ The workflow [`trajectory-attn.yml`](.github/workflows/trajectory-attn.yml) runs
 
 ## citation
 
-```
+```bibtex
 @inproceedings{10.1145/3712255.3734277,
 author = {Rojas, Junior},
 title = {Morphology-Adaptive Muscle-Driven Locomotion via Attention Mechanisms},
