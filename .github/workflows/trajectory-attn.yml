@@ -46,8 +46,9 @@ jobs:
           repository: 'juniorrojas/algovivo'
           ref: '${{ env.ALGOVIVO_BUILD_REF }}'
           path: algovivo.build.repo
-      
-      - run: |
+
+      - name: Copy build files
+        run: |
           cp -r algovivo.build.repo/build build
           cp -r algovivo.build.repo/build algovivo.repo/build
 

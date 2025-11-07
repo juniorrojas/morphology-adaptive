@@ -43,7 +43,11 @@ if __name__ == "__main__":
     with open(mesh_filename) as f:
         mesh_data = json.load(f)
 
-    vertex_k, muscle_k = attn.make_vertex_and_muscle_keys(mesh_data, policy_data)
+    vertex_k, muscle_k = attn.make_vertex_and_muscle_keys(
+        mesh_data,
+        center_vertex_id=center_vertex_id,
+        forward_vertex_id=forward_vertex_id
+    )
 
     native_instance = algovivo.NativeInstance.load(
         str(this_dirpath.parent.joinpath("build", "algovivo.so"))

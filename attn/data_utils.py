@@ -1,13 +1,9 @@
-import json
 import torch
 from .frame_projection import project_pos_vel
 
-def make_vertex_and_muscle_keys(mesh_data, policy_data):
+def make_vertex_and_muscle_keys(mesh_data, center_vertex_id, forward_vertex_id):
     vertex_k = []
     muscle_k = []
-
-    center_vertex_id = policy_data["center_vertex_id"]
-    forward_vertex_id = policy_data["forward_vertex_id"]
     
     pos = torch.tensor(mesh_data["pos"], dtype=torch.float32)
     vel = torch.zeros_like(pos)
