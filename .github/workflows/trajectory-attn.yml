@@ -18,6 +18,9 @@ on:
       frame_size:
         required: false
         default: 300
+      line_width:
+        required: false
+        default: 2
 
 env:
   ALGOVIVO_REF: '4d1209290945f596ce0687359feb3ec9809d93bb'
@@ -138,13 +141,15 @@ jobs:
           sudo apt-get install ffmpeg
 
       - name: Make video
+        env:
+          LINE_WIDTH: ${{ github.event.inputs.line_width || 2 }}
         run: |
           ffmpeg \
             -framerate 30 \
             -i "frames-biped/%d.png" \
             -framerate 30 \
             -i "frames-quadruped/%d.png" \
-            -filter_complex "[0:v]pad=iw+2:color=black[left];[left][1:v]hstack=inputs=2" \
+            -filter_complex "[0:v]pad=iw+${LINE_WIDTH}:color=black[left];[left][1:v]hstack=inputs=2" \
             -c:v libx264 \
             -profile:v high \
             -crf 20 \
