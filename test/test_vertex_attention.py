@@ -1,5 +1,6 @@
 import attn
 import torch
+torch.manual_seed(0)
 
 def test_vertex_attention_shapes():
     batch_size, num_vertices, vertex_key_size = 2, 3, 4
