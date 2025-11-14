@@ -11,7 +11,9 @@ def dot2d(ax, ay, bx, by):
     return ax * bx + ay * by
 
 def frame_projection(pos, center_vertex_id, forward_vertex_id, data, subtract_origin):
-    assert len(pos.shape) == 2 and pos.shape[1] == 2
+    space_dim = 2
+    assert len(pos.shape) == 2
+    assert pos.shape[1] == space_dim
     assert len(data.shape) == 2
 
     assert pos.shape[0] == data.shape[0]
