@@ -64,7 +64,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
 
       - name: Install algovivo
-        run: uv pip install "git+https://github.com/juniorrojas/algovivo.git@main#subdirectory=utils/py"
+        run: uv pip install --system "git+https://github.com/juniorrojas/algovivo.git@main#subdirectory=utils/py"
 
       - name: Generate trajectory
         run: |
