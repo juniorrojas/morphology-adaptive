@@ -68,6 +68,7 @@ jobs:
 
       - name: Generate trajectory
         run: |
+          export PYTHONPATH=.
           python scripts/generate_trajectory_with_attn_policy.py \
             --agent data/agents/${{ matrix.agent }} \
             --steps ${{ github.event.inputs.steps || 30 }} \
