@@ -23,12 +23,12 @@ on:
         default: 2
 
 env:
-  ALGOVIVO_REF: 'ee7c93023dfaae91ef7b3f23c7130d2c76456f4e'
+  ALGOVIVO_REF: '97f924a7aa41378f0e132017b36c5a438c68e5e3'
   ALGOVIVO_BUILD_REF: '007f505c1b16ac2e25d15e3c4d93efc611df7d28'
 
 jobs:
   generate-trajectory:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         agent: [biped, quadruped]
