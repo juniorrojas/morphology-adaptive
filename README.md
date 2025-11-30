@@ -20,19 +20,19 @@ The workflow [`trajectory-attn.yml`](.github/workflows/trajectory-attn.yml) runs
 
 ```bibtex
 @inproceedings{10.1145/3712255.3734277,
-author = {Rojas, Junior},
-title = {Morphology-Adaptive Muscle-Driven Locomotion via Attention Mechanisms},
-year = {2025},
-isbn = {9798400714641},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3712255.3734277},
-doi = {10.1145/3712255.3734277},
-booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference Companion},
-pages = {2138–2142},
-numpages = {5},
-keywords = {neural networks, attention mechanisms, virtual creatures},
-location = {NH Malaga Hotel, Malaga, Spain},
-series = {GECCO '25 Companion}
+  author = {Rojas, Junior},
+  title = {Morphology-Adaptive Muscle-Driven Locomotion via Attention Mechanisms},
+  year = {2025},
+  isbn = {9798400714641},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3712255.3734277},
+  doi = {10.1145/3712255.3734277},
+  booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference Companion},
+  pages = {2138–2142},
+  numpages = {5},
+  keywords = {neural networks, attention mechanisms, virtual creatures},
+  location = {NH Malaga Hotel, Malaga, Spain},
+  series = {GECCO '25 Companion}
 }
 ```
