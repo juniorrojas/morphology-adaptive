@@ -24,7 +24,7 @@ on:
 
 env:
   ALGOVIVO_REF: '97f924a7aa41378f0e132017b36c5a438c68e5e3'
-  ALGOVIVO_BUILD_REF: '007f505c1b16ac2e25d15e3c4d93efc611df7d28'
+  ALGOVIVO_BUILD_REF: 'cde2e06cb677672bf4da91987b2caf42a564748c'
 
 jobs:
   generate-trajectory:
@@ -52,7 +52,6 @@ jobs:
 
       - name: Copy build files
         run: |
-          cp -r algovivo.build.repo/build build
           cp -r algovivo.build.repo/build algovivo.repo/build
 
       - name: Set up Python
@@ -69,6 +68,7 @@ jobs:
       - name: Generate trajectory
         run: |
           export PYTHONPATH=.
+          export ALGOVIVO_NATIVE_LIB_FILENAME=$(pwd)/algovivo.build.repo/build/native/algovivo.amd64.so
           python scripts/generate_trajectory_with_attn_policy.py \
             --agent data/agents/${{ matrix.agent }} \
             --steps ${{ github.event.inputs.steps || 30 }} \

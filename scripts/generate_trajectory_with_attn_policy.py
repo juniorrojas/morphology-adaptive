@@ -49,9 +49,7 @@ if __name__ == "__main__":
         forward_vertex_id=forward_vertex_id
     )
 
-    native_instance = algovivo.NativeInstance.load(
-        str(this_dirpath.parent.joinpath("build", "algovivo.so"))
-    )
+    native_instance = algovivo.NativeInstance.load(os.environ["ALGOVIVO_NATIVE_LIB_FILENAME"])
 
     num_vertices = len(mesh_data["pos"])
 
