@@ -13,7 +13,7 @@ def test_vertex_attention_shapes():
     wv = attn.vertex_attention(k, v, q)
     assert wv.shape == (batch_size, num_queries, num_heads, vertex_value_size)
 
-def test_mask1():
+def test_mask_1():
     vertex_key = torch.tensor([
         [3, 4],
         [5, 10],
@@ -34,7 +34,7 @@ def test_mask1():
     wv = attn.vertex_attention(vertex_key, vertex_value, query, mask=mask)
     torch.testing.assert_close(wv, torch.tensor([[[3, 4], [3, 4]]], dtype=torch.float32).unsqueeze(0))
 
-def test_mask2():
+def test_mask_2():
     vertex_key = torch.tensor([
         [3, 4],
         [5, 10],
@@ -57,7 +57,7 @@ def test_mask2():
     wv = attn.vertex_attention(vertex_key, vertex_value, query, mask=mask)
     torch.testing.assert_close(wv, torch.tensor([[[5, 10], [5, 10], [5, 10], [5, 10]]], dtype=torch.float32).unsqueeze(0))
 
-def test_attn1():
+def test_vertex_attention_values():
     vertex_key = torch.tensor([
         [1, 0.4],
         [-1, 0]
