@@ -23,7 +23,7 @@ on:
         default: 2
 
 env:
-  ALGOVIVO_REF: '2ceb5b38bbe545c5edf32f78a1eb5ddc74c10f14'
+  ALGOVIVO_SRC_REF: '65e190859cd855f38942e71f4d841306c55de2c9'
   ALGOVIVO_BUILD_REF: '83ed37c28874490cb9434c35c5d7c3494befd797'
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'juniorrojas/algovivo'
-          ref: '${{ env.ALGOVIVO_REF }}'
+          ref: '${{ env.ALGOVIVO_SRC_REF }}'
           path: algovivo.repo
       
       - name: Clone algovivo build repo
@@ -63,7 +63,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
 
       - name: Install algovivo
-        run: uv pip install --system "git+https://github.com/juniorrojas/algovivo.git@$ALGOVIVO_REF#subdirectory=utils/py"
+        run: uv pip install --system "git+https://github.com/juniorrojas/algovivo.git@$ALGOVIVO_SRC_REF#subdirectory=utils/py"
 
       - name: Generate trajectory
         run: |
