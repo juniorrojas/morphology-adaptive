@@ -14,13 +14,19 @@ View animation in higher quality [here](https://www.youtube.com/watch?v=gmgyFIJz
 
 For simulation, this repository uses [Algovivo](https://github.com/juniorrojas/algovivo), originally built for the browser using WebAssembly, but here a native build is used to enable PyTorch integration.
 
+## run on GitHub Actions
+
 The workflow [`trajectory-attn.yml`](.github/workflows/trajectory-attn.yml) runs the controller on both morphologies and generates a video. If you have your own copy or fork of this repository, you can [run the workflow from the GitHub Actions UI](https://docs.github.com/en/actions/how-tos/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow#running-a-workflow), no local installation needed. Once it completes, the video will be saved as a workflow artifact and can be downloaded from the workflow run page.
 
 ## run locally
 
+Pull the Docker image:
+
 ```sh
 docker pull ghcr.io/juniorrojas/morphology-adaptive/bundle:latest
 ```
+
+Generate trajectory (use `biped` or `quadruped`):
 
 ```sh
 docker run --rm -it \
@@ -33,6 +39,8 @@ docker run --rm -it \
   -o trajectory.out
 ```
 
+Render frames:
+
 ```sh
 docker run --rm -it \
   -v $(pwd):/workspace \
@@ -43,6 +51,8 @@ docker run --rm -it \
   --steps ./trajectory.out/steps \
   -o frames.out
 ```
+
+Make video:
 
 ```sh
 ffmpeg -y \
