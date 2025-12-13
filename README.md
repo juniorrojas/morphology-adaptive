@@ -26,8 +26,6 @@ docker pull ghcr.io/juniorrojas/morphology-adaptive/bundle:latest
 docker run --rm -it \
   -v $(pwd):/workspace \
   -w /workspace \
-  -e PYTHONPATH=/morphology-adaptive \
-  -e ALGOVIVO_NATIVE_LIB_FILENAME=/morphology-adaptive/algovivo.repo/build/native/algovivo.so \
   ghcr.io/juniorrojas/morphology-adaptive/bundle:latest \
   python /morphology-adaptive/scripts/generate_trajectory_with_attn_policy.py \
   --agent /morphology-adaptive/data/agents/biped \
@@ -47,7 +45,7 @@ docker run --rm -it \
 ```
 
 ```sh
-ffmpeg \
+ffmpeg -y \
   -framerate 30 \
   -i frames.out/%d.png \
   -c:v libx264 \

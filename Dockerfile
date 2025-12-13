@@ -56,6 +56,9 @@ COPY ./scripts /morphology-adaptive/scripts
 
 RUN python /morphology-adaptive/scripts/install_algovivo.py --system --repo-dirname /morphology-adaptive/algovivo.repo
 
+ENV PYTHONPATH=/morphology-adaptive
+ENV ALGOVIVO_NATIVE_LIB_FILENAME=/morphology-adaptive/algovivo.repo/build/native/algovivo.so
+
 COPY ./data /morphology-adaptive/data
 COPY ./attn /morphology-adaptive/attn
 
