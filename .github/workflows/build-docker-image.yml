@@ -5,6 +5,12 @@ on:
     branches:
       - docker
   workflow_dispatch:
+    inputs:
+      latest:
+        description: 'Tag as latest'
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   build:
@@ -38,7 +44,7 @@ jobs:
           context: .
           platforms: linux/${{ matrix.platform }}
           push: true
-          tags: ghcr.io/${{ github.repository }}/bundle:latest-${{ matrix.platform }}
+          tags: ghcr.io/${{ github.repository }}/bundle:${{ github.sha }}-${{ matrix.platform }}
           cache-from: type=gha,scope=${{ matrix.platform }}
           cache-to: type=gha,mode=max,scope=${{ matrix.platform }}
 
@@ -56,8 +62,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create and push manifest
+      - name: Create and push SHA manifest
+        run: |
+          docker buildx imagetools create -t ghcr.io/${{ github.repository }}/bundle:${{ github.sha }} \
+            ghcr.io/${{ github.repository }}/bundle:${{ github.sha }}-amd64 \
+            ghcr.io/${{ github.repository }}/bundle:${{ github.sha }}-arm64
+
+      - name: Create and push latest manifest
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.latest == true }}
         run: |
           docker buildx imagetools create -t ghcr.io/${{ github.repository }}/bundle:latest \
-            ghcr.io/${{ github.repository }}/bundle:latest-amd64 \
-            ghcr.io/${{ github.repository }}/bundle:latest-arm64
+            ghcr.io/${{ github.repository }}/bundle:${{ github.sha }}-amd64 \
+            ghcr.io/${{ github.repository }}/bundle:${{ github.sha }}-arm64
