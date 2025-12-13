@@ -51,17 +51,24 @@ RUN pip install uv
 
 RUN uv pip install --system torch==2.7.0
 
-RUN mkdir /morphology-adaptive
-COPY ./scripts /morphology-adaptive/scripts
+ENV MORPHOLOGY_ADAPTIVE_DIRNAME=/morphology-adaptive
+ENV ALGOVIVO_REPO_DIRNAME=${MORPHOLOGY_ADAPTIVE_DIRNAME}/algovivo.repo
 
-RUN python /morphology-adaptive/scripts/install_algovivo.py --system --repo-dirname /morphology-adaptive/algovivo.repo
+RUN mkdir ${MORPHOLOGY_ADAPTIVE_DIRNAME}
+COPY ./scripts ${MORPHOLOGY_ADAPTIVE_DIRNAME}/scripts
 
-ENV PYTHONPATH=/morphology-adaptive
-ENV ALGOVIVO_NATIVE_LIB_FILENAME=/morphology-adaptive/algovivo.repo/build/native/algovivo.so
+RUN python ${MORPHOLOGY_ADAPTIVE_DIRNAME}/scripts/install_algovivo.py \
+    --system \
+    --src-ref main \
+    --build-ref build \
+    --repo-dirname ${ALGOVIVO_REPO_DIRNAME}
 
-COPY ./data /morphology-adaptive/data
-COPY ./attn /morphology-adaptive/attn
+ENV PYTHONPATH=${MORPHOLOGY_ADAPTIVE_DIRNAME}
+ENV ALGOVIVO_NATIVE_LIB_FILENAME=${ALGOVIVO_REPO_DIRNAME}/build/native/algovivo.so
+
+COPY ./data ${MORPHOLOGY_ADAPTIVE_DIRNAME}/data
+COPY ./attn ${MORPHOLOGY_ADAPTIVE_DIRNAME}/attn
 
 COPY ./attn /morphology_adaptive/attn
 
-RUN npm ci --prefix /morphology-adaptive/algovivo.repo
+RUN npm ci --prefix ${ALGOVIVO_REPO_DIRNAME}
