@@ -29,7 +29,7 @@ docker pull ghcr.io/juniorrojas/morphology-adaptive/bundle:latest
 Generate trajectory (use `biped` or `quadruped`):
 
 ```sh
-docker run --rm -it \
+docker run --rm \
   --user $(id -u):$(id -g) \
   -v $(pwd):/workspace \
   -w /workspace \
@@ -44,7 +44,7 @@ docker run --rm -it \
 Render frames:
 
 ```sh
-docker run --rm -it \
+docker run --rm \
   --user $(id -u):$(id -g) \
   -e HOME=/tmp \
   -v $(pwd):/workspace \
