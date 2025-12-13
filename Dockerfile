@@ -50,3 +50,8 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 RUN pip install uv
 
 RUN uv pip install --system torch==2.7.0
+
+RUN mkdir /morphology-adaptive
+COPY ./scripts /morphology-adaptive/scripts
+
+RUN python /morphology-adaptive/scripts/install_algovivo.py --system
