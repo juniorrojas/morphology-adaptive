@@ -59,23 +59,23 @@ if __name__ == "__main__":
     ])
     subprocess.run(cmd, check=True)
 
-    algovivo_lib_filename = None
+    algovivo_native_lib_filename = None
 
     m = platform.machine().lower()
     if m in ("aarch64", "arm64"):
         print("detected arm64 architecture")
-        algovivo_lib_filename = os.path.join(
+        algovivo_native_lib_filename = os.path.join(
             algovivo_repo_dirname, "build", "native", "algovivo.arm64.so"
         )
     elif m in ("x86_64", "amd64"):
         print("detected amd64 architecture")
-        algovivo_lib_filename = os.path.join(
+        algovivo_native_lib_filename = os.path.join(
             algovivo_repo_dirname, "build", "native", "algovivo.amd64.so"
         )
     else:
         raise RuntimeError("could not infer algovivo lib filename")
 
-    print(f"found algovivo lib: {algovivo_lib_filename}")
+    print(f"found algovivo lib: {algovivo_native_lib_filename}")
 
     # create symlink in build/native directory
     symlink_path = os.path.join(algovivo_repo_dirname, "build", "native", "algovivo.so")
@@ -83,6 +83,6 @@ if __name__ == "__main__":
         os.remove(symlink_path)
 
     # use relative symlink since both files are in the same directory
-    target_filename = os.path.basename(algovivo_lib_filename)
+    target_filename = os.path.basename(algovivo_native_lib_filename)
     os.symlink(target_filename, symlink_path)
     print(f"created symlink: {symlink_path} -> {target_filename}")
