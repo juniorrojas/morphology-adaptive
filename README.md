@@ -36,6 +36,7 @@ docker run --rm -it \
   python /morphology-adaptive/scripts/generate_trajectory_with_attn_policy.py \
   --agent /morphology-adaptive/data/agents/biped \
   --policy /morphology-adaptive/data/policies/attn \
+  --steps 200 \
   -o trajectory.out
 ```
 
@@ -49,6 +50,8 @@ docker run --rm -it \
   node /morphology-adaptive/algovivo.repo/utils/trajectory/renderTrajectory.js \
   --mesh ./trajectory.out/mesh.json \
   --steps ./trajectory.out/steps \
+  --width 300 \
+  --height 300 \
   -o frames.out
 ```
 
