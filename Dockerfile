@@ -60,3 +60,5 @@ COPY ./data /morphology-adaptive/data
 COPY ./attn /morphology-adaptive/attn
 
 COPY ./attn /morphology_adaptive/attn
+
+RUN npm ci --prefix /morphology-adaptive/algovivo.repo

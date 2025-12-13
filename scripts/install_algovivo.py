@@ -22,19 +22,19 @@ def clone_repo(repo_url, ref, repo_dirname):
 
 if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument("--ref", default="97f924a7aa41378f0e132017b36c5a438c68e5e3")
-    arg_parser.add_argument("--build-ref", default="cde2e06cb677672bf4da91987b2caf42a564748c")
+    arg_parser.add_argument("--src-ref", default="main")
+    arg_parser.add_argument("--build-ref", default="build")
     arg_parser.add_argument("--repo-dirname", default="algovivo.repo")
     arg_parser.add_argument("--system", action="store_true")
     args = arg_parser.parse_args()
 
-    algovivo_ref = args.ref
+    algovivo_src_ref = args.src_ref
     algovivo_build_ref = args.build_ref
 
     algovivo_repo_url = "https://github.com/juniorrojas/algovivo.git"
 
     algovivo_repo_dirname = args.repo_dirname
-    clone_repo(algovivo_repo_url, algovivo_ref, algovivo_repo_dirname)
+    clone_repo(algovivo_repo_url, algovivo_src_ref, algovivo_repo_dirname)
 
     # clone build branch to tmp directory and move build directory
     tmp_build_dirname = "algovivo.build.tmp"
