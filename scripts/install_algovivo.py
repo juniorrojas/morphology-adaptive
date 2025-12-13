@@ -73,9 +73,9 @@ if __name__ == "__main__":
             algovivo_repo_dirname, "build", "native", "algovivo.amd64.so"
         )
     else:
-        raise RuntimeError("could not infer algovivo lib filename")
+        raise RuntimeError("could not find algovivo native lib")
 
-    print(f"found algovivo lib: {algovivo_native_lib_filename}")
+    print(f"found algovivo native lib: {algovivo_native_lib_filename}")
 
     # create symlink in build/native directory
     symlink_path = os.path.join(algovivo_repo_dirname, "build", "native", "algovivo.so")
