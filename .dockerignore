@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__
+*.pyc
+.mypy_cache
+*.swo
+*.swp
+node_modules
+*.log
+*.log.*
+*.out
+*.out.*
+.vscode
+*.tmp
+*.ignore
+build

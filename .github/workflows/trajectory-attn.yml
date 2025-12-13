@@ -23,8 +23,8 @@ on:
         default: 2
 
 env:
-  ALGOVIVO_REF: '97f924a7aa41378f0e132017b36c5a438c68e5e3'
-  ALGOVIVO_BUILD_REF: 'cde2e06cb677672bf4da91987b2caf42a564748c'
+  ALGOVIVO_REF: '2ceb5b38bbe545c5edf32f78a1eb5ddc74c10f14'
+  ALGOVIVO_BUILD_REF: '83ed37c28874490cb9434c35c5d7c3494befd797'
 
 jobs:
   generate-trajectory:
