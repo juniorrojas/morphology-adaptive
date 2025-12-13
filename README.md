@@ -16,6 +16,22 @@ For simulation, this repository uses [Algovivo](https://github.com/juniorrojas/a
 
 The workflow [`trajectory-attn.yml`](.github/workflows/trajectory-attn.yml) runs the controller on both morphologies and generates a video. If you have your own copy or fork of this repository, you can [run the workflow from the GitHub Actions UI](https://docs.github.com/en/actions/how-tos/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow#running-a-workflow), no local installation needed. Once it completes, the video will be saved as a workflow artifact and can be downloaded from the workflow run page.
 
+## run locally
+
+```sh
+docker pull ghcr.io/juniorrojas/morphology-adaptive/bundle:latest
+```
+
+```sh
+docker run --rm -it \
+  -e PYTHONPATH=/morphology-adaptive \
+  -e ALGOVIVO_NATIVE_LIB_FILENAME=/morphology-adaptive/algovivo.repo/build/native/algovivo.so \
+  ghcr.io/juniorrojas/morphology-adaptive/bundle:latest \
+  python /morphology-adaptive/scripts/generate_trajectory_with_attn_policy.py \
+  --agent /morphology-adaptive/data/agents/biped \
+  --policy /morphology-adaptive/data/policies/attn
+```
+
 ## citation
 
 ```bibtex
