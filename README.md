@@ -1,6 +1,13 @@
 # morphology-adaptive muscle-driven locomotion via attention mechanisms
 
-[![test](https://github.com/juniorrojas/morphology-adaptive/actions/workflows/test.yml/badge.svg)](https://github.com/juniorrojas/morphology-adaptive/actions/workflows/test.yml)
+<p>
+  <a href="https://github.com/juniorrojas/morphology-adaptive/actions/workflows/test.yml">
+    <img src="https://github.com/juniorrojas/morphology-adaptive/actions/workflows/test.yml/badge.svg" alt="Test">
+  </a>
+  <a href="https://deepwiki.com/juniorrojas/morphology-adaptive">
+    <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki">
+  </a>
+</p>
 
 This repository demonstrates how a single locomotion controller can work with different shapes (biped and quadruped). It uses an attention mechanism to handle an arbitrary number of inputs, and the same module is shared across all muscles to support an arbitrary number of outputs.
 
