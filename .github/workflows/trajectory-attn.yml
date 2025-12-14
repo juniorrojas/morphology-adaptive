@@ -22,10 +22,6 @@ on:
         required: false
         default: 2
 
-env:
-  ALGOVIVO_SRC_REF: '65e190859cd855f38942e71f4d841306c55de2c9'
-  ALGOVIVO_BUILD_REF: '83ed37c28874490cb9434c35c5d7c3494befd797'
-
 jobs:
   generate-trajectory:
     runs-on: ubuntu-latest
@@ -36,18 +32,24 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@v4
 
+      - name: Load algovivo refs
+        id: algovivo-refs
+        run: |
+          echo "src_ref=$(jq -r '.src_ref' algovivo.json)" >> $GITHUB_OUTPUT
+          echo "build_ref=$(jq -r '.build_ref' algovivo.json)" >> $GITHUB_OUTPUT
+
       - name: Clone algovivo repo
         uses: actions/checkout@v4
         with:
           repository: 'juniorrojas/algovivo'
-          ref: '${{ env.ALGOVIVO_SRC_REF }}'
+          ref: '${{ steps.algovivo-refs.outputs.src_ref }}'
           path: algovivo.repo
-      
+
       - name: Clone algovivo build repo
         uses: actions/checkout@v4
         with:
           repository: 'juniorrojas/algovivo'
-          ref: '${{ env.ALGOVIVO_BUILD_REF }}'
+          ref: '${{ steps.algovivo-refs.outputs.build_ref }}'
           path: algovivo.build.repo
 
       - name: Copy build files
@@ -63,7 +65,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
 
       - name: Install algovivo
-        run: uv pip install --system "git+https://github.com/juniorrojas/algovivo.git@$ALGOVIVO_SRC_REF#subdirectory=utils/py"
+        run: uv pip install --system "git+https://github.com/juniorrojas/algovivo.git@${{ steps.algovivo-refs.outputs.src_ref }}#subdirectory=utils/py"
 
       - name: Generate trajectory
         run: |
