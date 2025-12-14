@@ -25,6 +25,12 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@v4
 
+      - name: Load algovivo refs
+        id: algovivo-refs
+        run: |
+          echo "src_ref=$(jq -r '.src_ref' algovivo.json)" >> $GITHUB_OUTPUT
+          echo "build_ref=$(jq -r '.build_ref' algovivo.json)" >> $GITHUB_OUTPUT
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -45,6 +51,9 @@ jobs:
           platforms: linux/${{ matrix.platform }}
           push: true
           tags: ghcr.io/${{ github.repository }}/bundle:${{ github.sha }}-${{ matrix.platform }}
+          build-args: |
+            ALGOVIVO_SRC_REF=${{ steps.algovivo-refs.outputs.src_ref }}
+            ALGOVIVO_BUILD_REF=${{ steps.algovivo-refs.outputs.build_ref }}
           cache-from: type=gha,scope=${{ matrix.platform }}
           cache-to: type=gha,mode=max,scope=${{ matrix.platform }}
 
