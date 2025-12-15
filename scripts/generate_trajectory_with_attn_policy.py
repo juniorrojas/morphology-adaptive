@@ -15,8 +15,15 @@ if __name__ == "__main__":
     arg_parser.add_argument("--steps", type=int, default=100)
     arg_parser.add_argument("--agent", type=str, required=False)
     arg_parser.add_argument("--mesh", type=str)
-    arg_parser.add_argument("--policy-metadata", type=str)
+    
     arg_parser.add_argument("--policy", type=str)
+
+    arg_parser.add_argument("--policy-metadata", type=str)
+    arg_parser.add_argument("--center-vertex-id", type=int)
+    arg_parser.add_argument("--forward-vertex-id", type=int)
+    arg_parser.add_argument("--max-abs-da", type=float, default=0.3)
+    arg_parser.add_argument("--min-a", type=float, default=0.25)
+
     arg_parser.add_argument("--output", "-o", type=str, default="trajectory_attn.out")
 
     args = arg_parser.parse_args()
@@ -29,16 +36,22 @@ if __name__ == "__main__":
             policy_metadata_filename = os.path.join(args.agent, "policy.json")
     else:
         policy_metadata_filename = args.policy_metadata
-        assert policy_metadata_filename is not None, "policy metadata must be provided if agent is not provided"
         mesh_filename = args.mesh
         assert mesh_filename is not None, "mesh must be provided if agent is not provided"
 
-    with open(policy_metadata_filename) as f:
-        policy_data = json.load(f)
-        center_vertex_id = policy_data["center_vertex_id"]
-        forward_vertex_id = policy_data["forward_vertex_id"]
-        max_abs_da = policy_data["max_abs_da"]
-        min_a = policy_data["min_a"]
+    # load policy metadata either from file or from args
+    if policy_metadata_filename is not None:
+        with open(policy_metadata_filename) as f:
+            policy_data = json.load(f)
+            center_vertex_id = policy_data["center_vertex_id"]
+            forward_vertex_id = policy_data["forward_vertex_id"]
+            max_abs_da = policy_data["max_abs_da"]
+            min_a = policy_data["min_a"]
+    else:
+        center_vertex_id = args.center_vertex_id
+        forward_vertex_id = args.forward_vertex_id
+        max_abs_da = args.max_abs_da
+        min_a = args.min_a
 
     with open(mesh_filename) as f:
         mesh_data = json.load(f)
