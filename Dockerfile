@@ -71,6 +71,4 @@ ENV ALGOVIVO_NATIVE_LIB_FILENAME=${ALGOVIVO_REPO_DIRNAME}/build/native/algovivo.
 COPY ./data ${MORPHOLOGY_ADAPTIVE_DIRNAME}/data
 COPY ./attn ${MORPHOLOGY_ADAPTIVE_DIRNAME}/attn
 
-COPY ./attn /morphology_adaptive/attn
-
 RUN npm ci --prefix ${ALGOVIVO_REPO_DIRNAME}
