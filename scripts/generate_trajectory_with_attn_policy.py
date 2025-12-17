@@ -15,6 +15,8 @@ if __name__ == "__main__":
     arg_parser.add_argument("--steps", type=int, default=100)
     arg_parser.add_argument("--agent", type=str, required=False)
     arg_parser.add_argument("--mesh", type=str)
+
+    arg_parser.add_argument("--state0", type=str)
     
     arg_parser.add_argument("--policy", type=str)
 
@@ -77,6 +79,15 @@ if __name__ == "__main__":
         muscles_l0=mesh_data.get("l0"),
     )
 
+    if args.state0 is not None:
+        with open(args.state0, "r") as f:
+            state0 = json.load(f)
+        system.vertices.pos.data.copy_(torch.tensor(state0["pos"]))
+        if "vel" in state0:
+            system.vertices.vel.data.copy_(torch.tensor(state0["vel"]))
+        if "a" in state0:
+            system.muscles.a.data.copy_(torch.tensor(state0["a"]))
+    
     vertex_k = torch.tensor(vertex_k, dtype=torch.float32).unsqueeze(0)
     muscle_k = torch.tensor(muscle_k, dtype=torch.float32).unsqueeze(0)
 
