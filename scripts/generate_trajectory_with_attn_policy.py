@@ -16,7 +16,7 @@ if __name__ == "__main__":
     arg_parser.add_argument("--agent", type=str, required=False)
     arg_parser.add_argument("--mesh", type=str)
 
-    arg_parser.add_argument("--state0-filename", type=str)
+    arg_parser.add_argument("--state0", type=str)
     
     arg_parser.add_argument("--policy", type=str)
 
@@ -79,8 +79,8 @@ if __name__ == "__main__":
         muscles_l0=mesh_data.get("l0"),
     )
 
-    if args.state0_filename is not None:
-        with open(args.state0_filename, "r") as f:
+    if args.state0 is not None:
+        with open(args.state0, "r") as f:
             state0 = json.load(f)
         system.vertices.pos.data.copy_(torch.tensor(state0["pos"]))
         if "vel" in state0:
