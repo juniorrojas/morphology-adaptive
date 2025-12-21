@@ -127,9 +127,10 @@ if __name__ == "__main__":
         vertex_v = torch.cat([projected_pos, projected_vel], dim=1).unsqueeze(0)
         assert vertex_v.shape == (batch_size, num_vertices, 4)
         da = model(vertex_k, muscle_k, vertex_v)
-        da = da.clamp(min=-max_abs_da, max=max_abs_da)[0]
+        policy_output = da[0].detach().tolist() # save before clamping
 
-        # update a with da
+        # update a with clamped da
+        da = da.clamp(min=-max_abs_da, max=max_abs_da)[0]
         system.muscles.a += da
         system.muscles.a.clamp_(min=min_a, max=1)
 
@@ -158,6 +159,9 @@ if __name__ == "__main__":
                 "pos0": pos0,
                 "vel0": vel0,
                 "a0": a0,
+
+                "policy_output": policy_output,
+
                 "pos1": pos1,
                 "vel1": vel1,
                 "a1": a1
