@@ -53,16 +53,14 @@ RUN uv pip install --system torch==2.7.0
 
 ARG MORPHOLOGY_ADAPTIVE_DIRNAME=/morphology-adaptive
 ARG ALGOVIVO_REPO_DIRNAME=${MORPHOLOGY_ADAPTIVE_DIRNAME}/algovivo.repo
-ARG ALGOVIVO_SRC_REF
-ARG ALGOVIVO_BUILD_REF
 
 RUN mkdir ${MORPHOLOGY_ADAPTIVE_DIRNAME}
+COPY ./algovivo.json ${MORPHOLOGY_ADAPTIVE_DIRNAME}/algovivo.json
 COPY ./scripts ${MORPHOLOGY_ADAPTIVE_DIRNAME}/scripts
 
 RUN python ${MORPHOLOGY_ADAPTIVE_DIRNAME}/scripts/install_algovivo.py \
     --system \
-    --src-ref ${ALGOVIVO_SRC_REF} \
-    --build-ref ${ALGOVIVO_BUILD_REF} \
+    --algovivo-config-filename ${MORPHOLOGY_ADAPTIVE_DIRNAME}/algovivo.json \
     --repo-dirname ${ALGOVIVO_REPO_DIRNAME}
 
 ENV PYTHONPATH=${MORPHOLOGY_ADAPTIVE_DIRNAME}
