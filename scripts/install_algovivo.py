@@ -3,8 +3,9 @@ import os
 import shutil
 import argparse
 import platform
+import json
 
-def clone_repo(repo_url, ref, repo_dirname):    
+def clone_repo(repo_url, ref, repo_dirname):
     shutil.rmtree(repo_dirname, ignore_errors=True)
     cmd = [
         "git", "clone",
@@ -22,14 +23,16 @@ def clone_repo(repo_url, ref, repo_dirname):
 
 if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument("--src-ref", default="main")
-    arg_parser.add_argument("--build-ref", default="build")
+    arg_parser.add_argument("--algovivo-config-filename", required=True)
     arg_parser.add_argument("--repo-dirname", default="algovivo.repo")
     arg_parser.add_argument("--system", action="store_true")
     args = arg_parser.parse_args()
 
-    algovivo_src_ref = args.src_ref
-    algovivo_build_ref = args.build_ref
+    with open(args.algovivo_config_filename, "r") as f:
+        config = json.load(f)
+
+    algovivo_src_ref = config["src_ref"]
+    algovivo_build_ref = config["build_ref"]
 
     algovivo_repo_url = "https://github.com/juniorrojas/algovivo.git"
 
