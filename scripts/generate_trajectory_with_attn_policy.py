@@ -106,8 +106,11 @@ if __name__ == "__main__":
 
     num_steps = args.steps
 
+    initial_center_pos = system.vertices.pos[center_vertex_id].detach().tolist()
+
+    loop_start_time = time.time()
     for i in range(num_steps):
-        print(i)
+        print(f"{i + 1}/{num_steps}")
 
         # state before policy and simulation step
         pos0 = system.vertices.pos.detach().tolist()
@@ -169,10 +172,27 @@ if __name__ == "__main__":
                 "vel1": vel1,
                 "a1": a1
             }, f)
+    loop_end_time = time.time()
+    loop_time = loop_end_time - loop_start_time
 
     print(f"trajectory saved to {trajectory_output_dirpath}")
 
-    print(f"total simulation step time: {sim_step_time:.3f} seconds")
-    print(f"simulation steps per second: {num_steps / sim_step_time:.1f}")
-    print(f"total policy step time: {policy_step_time:.3f} seconds")
+    print(f"steps: {num_steps}")
+    final_center_pos = system.vertices.pos[center_vertex_id].detach().tolist()
+    total_x_displacement = final_center_pos[0] - initial_center_pos[0]
+    total_sim_time = num_steps * system.h
+    print(f"x displacement: {total_x_displacement:.2f}")
+    x_velocity = total_x_displacement / total_sim_time
+    print(f"x velocity: {x_velocity:.2f}")
+
+    print(f"total sim step wall-clock time: {sim_step_time:.3f} seconds")
+    print(f"sim steps per second: {num_steps / sim_step_time:.1f}")
+    print(f"total policy step wall-clock time: {policy_step_time:.3f} seconds")
     print(f"policy steps per second: {num_steps / policy_step_time:.1f}")
+
+    sim_policy_time = sim_step_time + policy_step_time
+    print(f"total sim + policy wall-clock time: {sim_policy_time:.3f} seconds")
+    print(f"sim + policy steps per second: {num_steps / sim_policy_time:.1f}")
+
+    print(f"total loop wall-clock time: {loop_time:.3f} seconds")
+    print(f"loop steps per second: {num_steps / loop_time:.1f}")

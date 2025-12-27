@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - trajectory
   pull_request:
     branches:
       - main
@@ -74,7 +75,18 @@ jobs:
           python scripts/generate_trajectory_with_attn_policy.py \
             --agent data/agents/${{ matrix.agent }} \
             --steps ${{ github.event.inputs.steps || 30 }} \
-            --policy ${{ github.event.inputs.policy || 'data/policies/attn' }}
+            --policy ${{ github.event.inputs.policy || 'data/policies/attn' }} \
+            | tee trajectory_output.txt
+
+          # Extract info for summary
+          echo "${{ matrix.agent }}" > report_${{ matrix.agent }}.txt
+          grep -E "^steps:|x displacement|x velocity|(sim|policy|sim \+ policy|loop) steps per second" trajectory_output.txt >> report_${{ matrix.agent }}.txt
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          path: report_${{ matrix.agent }}.txt
+          name: report-${{ matrix.agent }}
 
       - name: Install ffmpeg
         run: |
@@ -125,6 +137,32 @@ jobs:
     runs-on: ubuntu-latest
     needs: generate-trajectory
     steps:
+      - name: Download reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: report-*
+          path: reports
+          merge-multiple: true
+
+      - name: Generate summary
+        run: |
+          echo "## trajectory generation report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| agent | steps | x displacement | x velocity | sim steps/s | policy steps/s | sim + policy steps/s | loop steps/s |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|----------------|------------|-------------|----------------|-------------------|--------------|" >> $GITHUB_STEP_SUMMARY
+
+          for report in reports/report_*.txt; do
+            agent=$(head -n 1 "$report")
+            steps=$(grep "^steps:" "$report" | sed 's/.*: //')
+            x_disp=$(grep "x displacement" "$report" | sed 's/.*: //')
+            x_vel=$(grep "x velocity" "$report" | sed 's/.*: //')
+            sim_sps=$(grep "^sim steps per second" "$report" | sed 's/.*: //')
+            policy_sps=$(grep "^policy steps per second" "$report" | sed 's/.*: //')
+            sim_policy_sps=$(grep "sim + policy steps per second" "$report" | sed 's/.*: //')
+            loop_sps=$(grep "loop steps per second" "$report" | sed 's/.*: //')
+            echo "| $agent | $steps | $x_disp | $x_vel | $sim_sps | $policy_sps | $sim_policy_sps | $loop_sps |" >> $GITHUB_STEP_SUMMARY
+          done
+
       - name: Download biped frames
         uses: actions/download-artifact@v4
         with:
