@@ -110,7 +110,7 @@ if __name__ == "__main__":
 
     loop_start_time = time.time()
     for i in range(num_steps):
-        print(f"{i + 1}/{num_steps}")
+        print(f"{i + 1} / {num_steps}")
 
         # state before policy and simulation step
         pos0 = system.vertices.pos.detach().tolist()
