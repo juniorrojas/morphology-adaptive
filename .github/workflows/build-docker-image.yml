@@ -69,7 +69,7 @@ jobs:
 
           # check that algovivo.so targets the correct architecture
           expected_arch="${{ matrix.platform }}"
-          actual_arch=$(docker run --rm morphology-adaptive:local readlink /morphology-adaptive/algovivo.repo/build/native/algovivo.so | sed 's/algovivo\.\(.*\)\.so/\1/')
+          actual_arch=$(docker run --rm morphology-adaptive:local readlink /morphology-adaptive/algovivo/build/native/algovivo.so | sed 's/algovivo\.\(.*\)\.so/\1/')
           if [ "$actual_arch" != "$expected_arch" ]; then
             echo "error: algovivo.so targets '$actual_arch', expected '$expected_arch'"
             exit 1

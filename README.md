@@ -57,7 +57,7 @@ docker run --rm \
   -v $(pwd):/workspace \
   -w /workspace \
   ghcr.io/juniorrojas/morphology-adaptive/bundle:latest \
-  node /morphology-adaptive/algovivo.repo/utils/trajectory/renderTrajectory.js \
+  node /morphology-adaptive/algovivo/utils/trajectory/renderTrajectory.js \
   --mesh ./trajectory.out/mesh.json \
   --steps ./trajectory.out/steps \
   --width 300 \

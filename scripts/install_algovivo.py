@@ -24,7 +24,7 @@ def clone_repo(repo_url, ref, repo_dirname):
 if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("--algovivo-config-filename", required=True)
-    arg_parser.add_argument("--repo-dirname", default="algovivo.repo")
+    arg_parser.add_argument("--repo-dirname", default="algovivo")
     arg_parser.add_argument("--system", action="store_true")
     args = arg_parser.parse_args()
 

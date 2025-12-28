@@ -44,7 +44,7 @@ jobs:
         with:
           repository: 'juniorrojas/algovivo'
           ref: '${{ steps.algovivo-refs.outputs.src_ref }}'
-          path: algovivo.repo
+          path: algovivo
 
       - name: Clone algovivo build repo
         uses: actions/checkout@v4
@@ -55,7 +55,7 @@ jobs:
 
       - name: Copy build files
         run: |
-          cp -r algovivo.build.repo/build algovivo.repo/build
+          cp -r algovivo.build.repo/build algovivo/build
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -95,10 +95,10 @@ jobs:
 
       - name: Render trajectory frames
         run: |
-          cd algovivo.repo
+          cd algovivo
           npm ci
           cd ..
-          node algovivo.repo/utils/trajectory/renderTrajectory.js \
+          node algovivo/utils/trajectory/renderTrajectory.js \
             --mesh trajectory_attn.out/mesh.json \
             --steps trajectory_attn.out/steps \
             --width ${{ github.event.inputs.frame_size || 300 }} \
