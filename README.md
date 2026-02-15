@@ -19,7 +19,7 @@ More details in [this paper](https://juniorrojas.com/papers/2025-morphology-adap
 
 View animation in higher quality [here](https://www.youtube.com/watch?v=gmgyFIJz9ZY).
 
-For simulation, this repository uses [Algovivo](https://github.com/juniorrojas/algovivo), originally built for the browser using WebAssembly, but here a native build is used to enable PyTorch integration.
+For simulation, this repository uses [algovivo](https://github.com/juniorrojas/algovivo), originally built for the browser using WebAssembly, but here a native build is used to enable PyTorch integration.
 
 ## run on GitHub Actions
 
