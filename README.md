@@ -30,7 +30,7 @@ The workflow [`trajectory-attn.yml`](.github/workflows/trajectory-attn.yml) runs
 Pull the Docker image:
 
 ```sh
-docker pull ghcr.io/juniorrojas/morphology-adaptive/bundle:5ffaaed
+docker pull ghcr.io/juniorrojas/morphology-adaptive/bundle:fb1ec87
 ```
 
 Generate trajectory (use `biped` or `quadruped`):
