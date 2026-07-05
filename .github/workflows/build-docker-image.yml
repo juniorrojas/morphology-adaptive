@@ -40,7 +40,7 @@ jobs:
           sudo docker image prune --all --force
 
       - name: Clone repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Get short SHA
         id: sha

@@ -31,7 +31,7 @@ jobs:
         agent: [biped, quadruped]
     steps:
       - name: Clone repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Load algovivo refs
         id: algovivo-refs
@@ -40,14 +40,14 @@ jobs:
           echo "build_ref=$(jq -r '.build_ref' algovivo.json)" >> $GITHUB_OUTPUT
 
       - name: Clone algovivo repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: 'juniorrojas/algovivo'
           ref: '${{ steps.algovivo-refs.outputs.src_ref }}'
           path: algovivo.repo
 
       - name: Clone algovivo build repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: 'juniorrojas/algovivo'
           ref: '${{ steps.algovivo-refs.outputs.build_ref }}'
