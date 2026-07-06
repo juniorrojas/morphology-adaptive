@@ -40,7 +40,7 @@ jobs:
           sudo docker image prune --all --force
 
       - name: Clone repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Get short SHA
         id: sha
@@ -58,7 +58,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/${{ matrix.platform }}
@@ -82,7 +82,7 @@ jobs:
 
       - name: Push image
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.push == true }}
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/${{ matrix.platform }}

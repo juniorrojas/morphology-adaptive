@@ -31,7 +31,7 @@ jobs:
         agent: [biped, quadruped]
     steps:
       - name: Clone repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Load algovivo refs
         id: algovivo-refs
@@ -40,14 +40,14 @@ jobs:
           echo "build_ref=$(jq -r '.build_ref' algovivo.json)" >> $GITHUB_OUTPUT
 
       - name: Clone algovivo repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'juniorrojas/algovivo'
           ref: '${{ steps.algovivo-refs.outputs.src_ref }}'
           path: algovivo.repo
 
       - name: Clone algovivo build repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'juniorrojas/algovivo'
           ref: '${{ steps.algovivo-refs.outputs.build_ref }}'
@@ -58,12 +58,12 @@ jobs:
           cp -r algovivo.build.repo/build algovivo.repo/build
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
 
       - name: Install algovivo
         run: uv pip install --system "git+https://github.com/juniorrojas/algovivo.git@${{ steps.algovivo-refs.outputs.src_ref }}#subdirectory=utils/py"
@@ -83,7 +83,7 @@ jobs:
           grep -E "^steps:|x displacement|x velocity|(sim|policy|sim \+ policy|loop) steps per second" trajectory_output.txt >> report_${{ matrix.agent }}.txt
 
       - name: Upload report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: report_${{ matrix.agent }}.txt
           name: report-${{ matrix.agent }}
@@ -116,19 +116,19 @@ jobs:
             video_${{ matrix.agent }}.mp4
 
       - name: Upload trajectory data
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: trajectory_attn.out
           name: trajectory-${{ matrix.agent }}
 
       - name: Upload trajectory frames
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: frames.out
           name: trajectory-${{ matrix.agent }}-frames
 
       - name: Upload video
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: video_${{ matrix.agent }}.mp4
           name: trajectory-${{ matrix.agent }}-video
@@ -138,7 +138,7 @@ jobs:
     needs: generate-trajectory
     steps:
       - name: Download reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: report-*
           path: reports
@@ -164,13 +164,13 @@ jobs:
           done
 
       - name: Download biped frames
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: trajectory-biped-frames
           path: frames-biped
 
       - name: Download quadruped frames
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: trajectory-quadruped-frames
           path: frames-quadruped
@@ -199,7 +199,7 @@ jobs:
             merged.mp4
 
       - name: Upload merged video
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           path: merged.mp4
           name: video
