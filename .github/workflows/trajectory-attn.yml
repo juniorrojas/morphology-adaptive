@@ -83,7 +83,7 @@ jobs:
           grep -E "^steps:|x displacement|x velocity|(sim|policy|sim \+ policy|loop) steps per second" trajectory_output.txt >> report_${{ matrix.agent }}.txt
 
       - name: Upload report
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: report_${{ matrix.agent }}.txt
           name: report-${{ matrix.agent }}
@@ -116,19 +116,19 @@ jobs:
             video_${{ matrix.agent }}.mp4
 
       - name: Upload trajectory data
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: trajectory_attn.out
           name: trajectory-${{ matrix.agent }}
 
       - name: Upload trajectory frames
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: frames.out
           name: trajectory-${{ matrix.agent }}-frames
 
       - name: Upload video
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: video_${{ matrix.agent }}.mp4
           name: trajectory-${{ matrix.agent }}-video
@@ -138,7 +138,7 @@ jobs:
     needs: generate-trajectory
     steps:
       - name: Download reports
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           pattern: report-*
           path: reports
@@ -164,13 +164,13 @@ jobs:
           done
 
       - name: Download biped frames
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: trajectory-biped-frames
           path: frames-biped
 
       - name: Download quadruped frames
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: trajectory-quadruped-frames
           path: frames-quadruped
@@ -199,7 +199,7 @@ jobs:
             merged.mp4
 
       - name: Upload merged video
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: merged.mp4
           name: video
