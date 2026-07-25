@@ -30,7 +30,7 @@ The workflow [`trajectory-attn.yml`](.github/workflows/trajectory-attn.yml) runs
 Pull the Docker image:
 
 ```sh
-docker pull ghcr.io/juniorrojas/morphology-adaptive/bundle:fb1ec87
+docker pull ghcr.io/juniorrojas/morphology-adaptive/bundle:a0ca45a
 ```
 
 Generate trajectory (use `biped` or `quadruped`):
@@ -40,7 +40,7 @@ docker run --rm \
   --user $(id -u):$(id -g) \
   -v $(pwd):/workspace \
   -w /workspace \
-  ghcr.io/juniorrojas/morphology-adaptive/bundle:fb1ec87 \
+  ghcr.io/juniorrojas/morphology-adaptive/bundle:a0ca45a \
   python /morphology-adaptive/scripts/generate_trajectory_with_attn_policy.py \
   --agent /morphology-adaptive/data/agents/biped \
   --policy /morphology-adaptive/data/policies/attn \
@@ -56,7 +56,7 @@ docker run --rm \
   -e HOME=/tmp \
   -v $(pwd):/workspace \
   -w /workspace \
-  ghcr.io/juniorrojas/morphology-adaptive/bundle:fb1ec87 \
+  ghcr.io/juniorrojas/morphology-adaptive/bundle:a0ca45a \
   node /morphology-adaptive/algovivo.repo/utils/trajectory/renderTrajectory.js \
   --mesh ./trajectory.out/mesh.json \
   --steps ./trajectory.out/steps \
