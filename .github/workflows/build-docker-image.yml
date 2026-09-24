@@ -67,18 +67,21 @@ jobs:
           cache-from: type=gha,scope=${{ matrix.platform }}
           cache-to: type=gha,mode=max,scope=${{ matrix.platform }}
 
-      - name: Test image
+      - name: Install ffmpeg
         run: |
-          docker run --rm morphology-adaptive:local test -d /morphology-adaptive
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
 
-          # check that algovivo.so targets the correct architecture
-          expected_arch="${{ matrix.platform }}"
-          actual_arch=$(docker run --rm morphology-adaptive:local readlink /morphology-adaptive/algovivo.repo/build/native/algovivo.so | sed 's/algovivo\.\(.*\)\.so/\1/')
-          if [ "$actual_arch" != "$expected_arch" ]; then
-            echo "error: algovivo.so targets '$actual_arch', expected '$expected_arch'"
-            exit 1
-          fi
-          echo "algovivo.so targets $expected_arch"
+      - name: Test image
+        run: ./test/test_docker_image.sh morphology-adaptive:local docker-test.out
+
+      - name: Upload test videos
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: docker-test-videos-${{ matrix.platform }}
+          path: docker-test.out/*.mp4
+          if-no-files-found: ignore
 
       - name: Push image
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.push == true }}
